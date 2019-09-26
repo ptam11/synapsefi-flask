@@ -24,6 +24,10 @@ def remove_session():
     """ remove username to stop authentication"""
     session.clear()
 
+@user.route('/', methods=["GET"])
+def index():
+    return redirect(f"/users/signup")
+
 @user.route('/signup', methods=["GET", "POST"])
 def signup():
     form = UserAddForm()
@@ -43,7 +47,7 @@ def signup():
     elif "USERNAME" in session:
         return redirect(f"/users/{username}")
     else:
-        if User.is_duplicate_username(username):
+        if username != None and User.is_duplicate_username(username):
             flash("Username already exists", "danger")
         return render_template("signup.html", form=form)
 

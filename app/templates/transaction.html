@@ -4,10 +4,10 @@
 {% block content %}
 <div class="row justify-content-md-center">
     <div class="col-md-7 col-lg-5">
-        <h2 class="join-message">{{transactions|length}} Executed Transactions </h2>
+        <h2 class="join-message">{{transactions|length}} Transactions </h2>
         <ul>
         {% for transaction in transactions %}
-            <li>FROM: {{transaction.from.nickname }} {{transaction.from.type }} TO: {{transaction.to.nickname }} {{transaction.to.type }} FOR: {{transaction.amount.amount }} {{transaction.amount.currency }}</li>
+            <li>FROM:{{transaction.from.nickname }} {{transaction.from.type }} TO: {{transaction.to.nickname }} {{transaction.to.type }} FOR: {{transaction.amount.amount }} {{transaction.amount.currency }}  STATUS: {{transaction.recent_status.status}}</li>
         {% endfor %}
         </ul>
         <h2 class="join-message">Add Transaction</h2>

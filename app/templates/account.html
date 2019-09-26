@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block body_class %}onboarding{% endblock %}
+
+{% block content %}
+<div class="row justify-content-md-center">
+    <div class="col-md-7 col-lg-5">
+        <h2 class="join-message">{{accounts|length}} Existing Accounts </h2>
+        <ul>
+        {% for account in accounts %}
+            <li><b> {{account.info.nickname }} </b>  {{account.type}} {{account.allowed}} {{account.info.balance.currency}} {{account.info.balance.amount}}</li>
+        {% endfor %}
+        </ul>
+        <h2 class="join-message">Add Account</h2>
+        <form method="POST" id="account_form">
+            <!-- {{ form.csrf_token }} -->
+            {{ form.hidden_tag() }}
+
+            {% for field in form if field.widget.input_type != 'hidden' %}
+                
+                {{ field(placeholder=field.label.text, class="form-control") }}
+                
+                {% for error in field.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            {% endfor %}
+
+            <button class="btn btn-primary btn-lg btn-block">Add Account!</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

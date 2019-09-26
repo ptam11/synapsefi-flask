@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block body_class %}onboarding{% endblock %}
+
+{% block content %}
+<div class="row justify-content-md-center">
+    <div class="col-md-7 col-lg-5">
+        <h2 class="join-message">{{transactions|length}} Executed Transactions </h2>
+        <ul>
+        {% for transaction in transactions %}
+            <li>FROM: {{transaction.from.nickname }} {{transaction.from.type }} TO: {{transaction.to.nickname }} {{transaction.to.type }} FOR: {{transaction.amount.amount }} {{transaction.amount.currency }}</li>
+        {% endfor %}
+        </ul>
+        <h2 class="join-message">Add Transaction</h2>
+        <form method="POST" id="account_form">
+            <!-- {{ form.csrf_token }} -->
+            {{ form.hidden_tag() }}
+
+            {% for field in form if field.widget.input_type != 'hidden' %}
+                <span>{{field.label.text}}</span>
+                {{ field(placeholder=field.label.text, class="form-control") }}
+                
+                {% for error in field.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            {% endfor %}
+
+            <button class="btn btn-primary btn-lg btn-block">Add Transaction!</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

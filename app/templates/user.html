@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block body_class %}onboarding{% endblock %}
+
+{% block content %}
+<div class="row justify-content-md-center">
+    <div class="col-md-7 col-lg-5">
+        <h2 class="join-message">Welcome {{user.documents[0].name}}</h2>
+        <h3>Submitted Documents for KYC</h3>
+        {% for base_document in user.documents %}
+            <p>Base Document {{base_document.entity_scope }}</p>
+            <p>Score {{base_document.id_score }}</p>
+            <p>Permission {{base_document.permission_scope }}</p>
+            <p>Physical Documents</p>
+                {% for p_doc in base_document.physical_docs %}
+                    <ul>
+                        <li>Document {{p_doc.document_type}} is {{p_doc.status}}</li>        
+                    </ul>
+                {% endfor %}
+            <p>Social Documents</p>
+                {% for s_doc in base_document.social_docs %}
+                    <ul>
+                        <li>Document {{s_doc.document_type}} is {{s_doc.status}}</li>        
+                    </ul>
+                {% endfor %}
+            {% if base_document.virtual_docs|length > 0 %}
+            <p>Virtual Documents</p>
+                {% for v_doc in base_document.virtual_docs %}
+                    <ul>
+                        <li>Document {{v_doc.document_type}} is {{v_doc.status}}</li>        
+                    </ul>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
